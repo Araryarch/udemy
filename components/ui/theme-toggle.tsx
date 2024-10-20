@@ -25,7 +25,7 @@ const ThemeToggle = ({ classname }: Props) => {
             document.body.classList.toggle('dark')
           }}
         >
-          {isDarkMode ? <MoonIcon size={40} /> : <Lamp size={40} />}
+          {isDarkMode ? <MoonIcon size={30} /> : <Lamp size={30} />}
         </TooltipTrigger>
         <TooltipContent>
           {isDarkMode ? 'dark mode' : 'light mode'}

@@ -121,7 +121,7 @@ const LoginPage = () => {
           </Button>
         </CardFooter>
       </Card>
-      <Breadcrumb className='absolute bottom-10 left-10'>
+      <Breadcrumb className='absolute top-10 left-10 xl:top-12'>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href='/'>Home</BreadcrumbLink>

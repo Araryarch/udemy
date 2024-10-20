@@ -11,7 +11,7 @@ const Layout = ({ children }: Props) => {
       </div>
       <div className='right xl:w-1/2 xl:min-h-screen w-full h-[70vh] flex flex-col gap-2 justify-center items-center relative'>
         {children}
-        <ThemeToggle classname='absolute top-12 right-12' />
+        <ThemeToggle classname='absolute top-10 right-10' />
       </div>
     </div>
   )
