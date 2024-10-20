@@ -6,12 +6,11 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card'
 import Layout from '../Layout'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { PersonStandingIcon } from 'lucide-react'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,39 +21,35 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator
-} from '@/components/ui/breadcrumb'
+import { PasswordInput } from '@/components/ui/password-input'
+import { useRouter } from 'next/navigation'
 
 const fromSchema = z.object({
   email: z.string().email(),
-  password: z.string()
+  password: z.string(),
 })
 
 const LoginPage = () => {
+  const router = useRouter()
   const form = useForm<z.infer<typeof fromSchema>>({
     resolver: zodResolver(fromSchema),
     defaultValues: {
       email: '',
-      password: ''
-    }
+      password: '',
+    },
   })
 
-  const handleSubmit = () => {
+  const handleSubmit = (data: z.infer<typeof fromSchema>) => {
     console.log('login validation passed')
+    router.push('/dashboard')
   }
 
   return (
     <Layout>
-      <PersonStandingIcon size={50} />
-      <Card className='w-full max-w-sm'>
+      <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>Login to your Anidash account</CardDescription>
@@ -63,18 +58,20 @@ const LoginPage = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(handleSubmit)}
-              className='flex flex-col gap-4'
+              className="flex flex-col gap-4"
             >
               <FormField
                 control={form.control}
-                name='email'
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email*</FormLabel>
+                    <FormLabel>
+                      Email<span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='johndoe@gmail.com'
-                        type='email'
+                        placeholder="johndoe@gmail.com"
+                        type="email"
                         {...field}
                       />
                     </FormControl>
@@ -87,51 +84,32 @@ const LoginPage = () => {
               />
               <FormField
                 control={form.control}
-                name='password'
+                name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password*</FormLabel>
+                    <FormLabel>
+                      Password<span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder='********'
-                        type='password'
-                        {...field}
-                      />
+                      <PasswordInput placeholder="********" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button
-                type='submit'
-                className='uppercase font-bold'
-              >
+              <Button type="submit" className="font-bold uppercase">
                 login
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className='justify-between'>
-          <small className='font-semibold'>Don&apos;t have an account?</small>
-          <Button
-            asChild
-            variant={'outline'}
-          >
+        <CardFooter className="justify-between">
+          <small className="font-semibold">Don&apos;t have an account?</small>
+          <Button asChild variant={'outline'}>
             <Link href={'/sign-up'}>Sign up</Link>
           </Button>
         </CardFooter>
       </Card>
-      <Breadcrumb className='absolute top-10 left-10 xl:top-12'>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/'>Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/login'>Login</BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
     </Layout>
   )
 }

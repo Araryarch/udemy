@@ -5,9 +5,9 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger
+  TooltipTrigger,
 } from './tooltip'
-import { Lamp, MoonIcon, SunIcon } from 'lucide-react'
+import { Lamp, MoonIcon } from 'lucide-react'
 
 type Props = {
   classname?: string

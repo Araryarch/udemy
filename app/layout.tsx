@@ -5,21 +5,21 @@ import './globals.css'
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
 export const metadata: Metadata = {
   title: 'Udemy Projects',
-  description: 'Ararya Course'
+  description: 'Ararya Course',
 }
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body className={cn(poppins.className, 'dark')}>{children}</body>
     </html>
   )
