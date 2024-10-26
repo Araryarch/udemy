@@ -75,6 +75,7 @@
 
 ::-webkit-scrollbar {
   width: var(--scrollbar-width);
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
