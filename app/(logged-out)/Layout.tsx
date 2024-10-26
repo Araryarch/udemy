@@ -14,7 +14,9 @@ const Layout = ({ children }: Props) => {
   const isRoot = pathname === '/'
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[url(bg-light.png)] bg-cover py-10 transition-all duration-500 ease-in-out dark:bg-[url(bg-dark.png)]">
+    <div
+      className={`flex min-h-screen w-full flex-col items-center justify-center bg-[url(bg-light.png)] bg-cover py-10 transition-all duration-500 ease-in-out dark:bg-[url(bg-dark.png)]`}
+    >
       <div className="py-2">
         <PersonStandingIcon size={45} />
       </div>
