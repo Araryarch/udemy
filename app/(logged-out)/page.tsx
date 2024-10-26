@@ -6,8 +6,8 @@ import Link from 'next/link'
 const LandingPage = () => {
   return (
     <Layout>
-      <h1 className="text-7xl font-semibold">Anidash.</h1>
-      <p>dashboard to manage user watch</p>
+      <h1 className="text-7xl font-bold">Anidash.</h1>
+      <p className="pb-1">dashboard to manage user watch</p>
       <div className="button-wrapper flex items-center gap-2">
         <Link href={'/login'}>
           <Button>Log in</Button>

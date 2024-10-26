@@ -35,6 +35,10 @@
     --chart-4: 41 86% 83%;
     --chart-5: 349 89% 87%;
     --radius: 0.5rem;
+    --scrollbar-bg: #f2cdcd;
+    --scrollbar-thumb: #fab387;
+    --scrollbar-thumb-hover: #fab387;
+    --scrollbar-width: 5px;
   }
 
   .dark {
@@ -62,7 +66,30 @@
     --chart-3: 266 85% 82%;
     --chart-4: 41 86% 83%;
     --chart-5: 349 89% 87%;
+    --scrollbar-bg: #cba6f7;
+    --scrollbar-thumb: #1e1e2e;
+    --scrollbar-thumb-hover: #1e1e2e;
+    --scrollbar-width: 5px;
   }
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-bg);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
 }
 
 @layer base {

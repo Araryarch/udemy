@@ -12,7 +12,7 @@ import Layout from '../Layout'
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, PersonStandingIcon } from 'lucide-react'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -39,6 +39,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 import { Calendar } from '@/components/ui/calendar'
 import { PasswordInput } from '@/components/ui/password-input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -133,213 +141,226 @@ const SignupPage = () => {
   dobFromDate.setFullYear(dobFromDate.getFullYear() - 120)
 
   return (
-    <Layout classname="border-[1px] backdrop-blur-lg">
-      <Card className="relative w-full max-w-sm border-[1px] border-transparent bg-transparent shadow-transparent">
-        <CardHeader>
-          <CardTitle>Sign up</CardTitle>
-          <CardDescription>Sign up for a new Anidash account</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="flex flex-col gap-4"
-            >
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Email<span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="johndoe@gmail.com"
-                        type="email"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="accountType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Account type<span className="text-destructive">*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange}>
+    <>
+      <Layout classname="border-[1px] border-double backdrop-blur-lg">
+        <Card className="relative w-full max-w-sm border-transparent bg-transparent shadow-transparent">
+          <CardHeader>
+            <CardTitle>Sign up</CardTitle>
+            <CardDescription>Sign up for a new Anidash account</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className="flex flex-col gap-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Email<span className="text-destructive">*</span>
+                      </FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="select an account type" />
-                        </SelectTrigger>
+                        <Input
+                          placeholder="johndoe@gmail.com"
+                          type="email"
+                          {...field}
+                        />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="personal">Personal</SelectItem>
-                        <SelectItem value="company">Company</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-              {accountType == 'company' && (
-                <>
-                  <FormField
-                    control={form.control}
-                    name="companyName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Company name
-                          <span className="text-destructive">*</span>
-                        </FormLabel>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="accountType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Account type<span className="text-destructive">*</span>
+                      </FormLabel>
+                      <Select onValueChange={field.onChange}>
                         <FormControl>
-                          <Input placeholder="Company Name" {...field} />
+                          <SelectTrigger>
+                            <SelectValue placeholder="select an account type" />
+                          </SelectTrigger>
                         </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="numberOfEmployees"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Employees<span className="text-destructive">*</span>
-                        </FormLabel>
+                        <SelectContent>
+                          <SelectItem value="personal">Personal</SelectItem>
+                          <SelectItem value="company">Company</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                {accountType == 'company' && (
+                  <>
+                    <FormField
+                      control={form.control}
+                      name="companyName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Company name
+                            <span className="text-destructive">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input placeholder="Company Name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="numberOfEmployees"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Employees<span className="text-destructive">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Employees"
+                              type="number"
+                              min={0}
+                              {...field}
+                              value={field.value ?? ''}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </>
+                )}
+                <FormField
+                  control={form.control}
+                  name="dob"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>
+                        Date of Birth<span className="text-destructive">*</span>
+                      </FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={'outline'}
+                              className="flex justify-between normal-case"
+                            >
+                              <span>Pick a Date</span>
+                              <CalendarIcon />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent align="start" className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            defaultMonth={field.value}
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            fixedWeeks
+                            weekStartsOn={1}
+                            fromDate={dobFromDate}
+                            toDate={new Date()}
+                            captionLayout="dropdown-buttons"
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Password<span className="text-destructive">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <PasswordInput placeholder="*******" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="passwordConfirm"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Confirm Password
+                        <span className="text-destructive">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <PasswordInput placeholder="*******" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="acceptTerms"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex justify-start gap-2">
                         <FormControl>
-                          <Input
-                            placeholder="Employees"
-                            type="number"
-                            min={0}
-                            {...field}
-                            value={field.value ?? ''}
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
                           />
                         </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
-              <FormField
-                control={form.control}
-                name="dob"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>
-                      Date of Birth<span className="text-destructive">*</span>
-                    </FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={'outline'}
-                            className="flex justify-between normal-case"
-                          >
-                            <span>Pick a Date</span>
-                            <CalendarIcon />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent align="start" className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          defaultMonth={field.value}
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          fixedWeeks
-                          weekStartsOn={1}
-                          fromDate={dobFromDate}
-                          toDate={new Date()}
-                          captionLayout="dropdown-buttons"
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Password<span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <PasswordInput placeholder="*******" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="passwordConfirm"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Confirm Password
-                      <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <PasswordInput placeholder="*******" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="acceptTerms"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex justify-start gap-2">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormLabel>
-                        I accept the terms and the conditions
-                      </FormLabel>
-                    </div>
-                    <FormDescription>
-                      By signing up you are agree to our{' '}
-                      <Link
-                        className="text-primary hover:underline"
-                        href="/terms"
-                      >
-                        terms and conditions
-                      </Link>
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                        <FormLabel>
+                          I accept the terms and the conditions
+                        </FormLabel>
+                      </div>
+                      <FormDescription>
+                        By signing up you are agree to our{' '}
+                        <Link
+                          className="text-primary hover:underline"
+                          href="/terms"
+                        >
+                          terms and conditions
+                        </Link>
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="font-bold uppercase">
+                  Sign up
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="justify-between">
+            <small className="font-semibold">Already have an account?</small>
+            <Button asChild variant={'outline'}>
+              <Link href={'/login'}>Login</Link>
+            </Button>
+          </CardFooter>
+        </Card>
+      </Layout>
 
-              <Button type="submit" className="font-bold uppercase">
-                Sign up
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="justify-between">
-          <small className="font-semibold">Already have an account?</small>
-          <Button asChild variant={'outline'}>
-            <Link href={'/login'}>Login</Link>
-          </Button>
-        </CardFooter>
-      </Card>
-    </Layout>
+      <Breadcrumb className="fixed left-0 top-0 p-10">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/sign-up">Sign Up</BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    </>
   )
 }
 

@@ -1,4 +1,6 @@
+import { PersonStandingIcon } from 'lucide-react'
 import ThemeToggle from '../../components/ui/theme-toggle'
+
 type Props = {
   children: React.ReactNode
   classname?: string
@@ -7,6 +9,9 @@ type Props = {
 const Layout = ({ children, classname }: Props) => {
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[url(./bg-light.png)] bg-cover py-10 transition-all duration-500 ease-in-out dark:bg-[url(./bg-dark.png)]">
+      <div className="py-2">
+        <PersonStandingIcon size={45} />
+      </div>
       <div
         className={`flex flex-col items-center justify-center rounded-sm border-secondary px-2 py-4 dark:border-white ${classname}`}
       >
