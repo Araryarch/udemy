@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card'
 import Layout from '../Layout'
 
@@ -23,7 +23,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
@@ -32,12 +32,12 @@ import {
   SelectContent,
   SelectItem,
   SelectValue,
-  SelectTrigger
+  SelectTrigger,
 } from '@/components/ui/select'
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
 import { PasswordInput } from '@/components/ui/password-input'
@@ -51,16 +51,16 @@ const accountTypeSchema = z
     numberOfEmployees: z.coerce.number().optional(),
     acceptTerms: z
       .boolean({
-        required_error: 'You must accept the terms and conditions'
+        required_error: 'You must accept the terms and conditions',
       })
-      .refine((checked) => checked, 'You must accept the terms and conditions')
+      .refine((checked) => checked, 'You must accept the terms and conditions'),
   })
   .superRefine((data, ctx) => {
     if (data.accountType == 'company' && !data.companyName) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['companyName'],
-        message: 'Company name is required'
+        message: 'Company name is required',
       })
     }
     if (
@@ -70,7 +70,7 @@ const accountTypeSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['numberOfEmployees'],
-        message: 'number of employees is required'
+        message: 'number of employees is required',
       })
     }
   })
@@ -84,14 +84,14 @@ const passwordSchema = z
         // mengandung 1 spesial char dan 1 uppercase
         return /^(?=.*[!@#$%^&*])(?=.*[A-Z]).*$/.test(password)
       }, 'Password must contain at least 1 spesial characters and 1 uppercase character'),
-    passwordConfirm: z.string()
+    passwordConfirm: z.string(),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.passwordConfirm) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['passwordConfirm'],
-        message: 'Password do not match'
+        message: 'Password do not match',
       })
     }
   })
@@ -103,10 +103,10 @@ const baseSchema = z.object({
     const eighteedYearsAgo = new Date(
       today.getFullYear() - 18,
       today.getMonth(),
-      today.getDate()
+      today.getDate(),
     )
     return date <= eighteedYearsAgo
-  }, 'You must be at least 18 years old')
+  }, 'You must be at least 18 years old'),
 })
 
 const formSchema = baseSchema.and(passwordSchema).and(accountTypeSchema)
@@ -119,8 +119,8 @@ const SignupPage = () => {
       email: '',
       password: '',
       passwordConfirm: '',
-      companyName: ''
-    }
+      companyName: '',
+    },
   })
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
@@ -133,12 +133,8 @@ const SignupPage = () => {
   dobFromDate.setFullYear(dobFromDate.getFullYear() - 120)
 
   return (
-    <Layout>
-      <Card
-        className={`w-full max-w-sm ${
-          accountType == 'company' ? 'mt-96' : 'mt-48'
-        } relative`}
-      >
+    <Layout classname="border-[1px] backdrop-blur-lg">
+      <Card className="relative w-full max-w-sm border-[1px] border-transparent bg-transparent shadow-transparent">
         <CardHeader>
           <CardTitle>Sign up</CardTitle>
           <CardDescription>Sign up for a new Anidash account</CardDescription>
@@ -147,20 +143,20 @@ const SignupPage = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(handleSubmit)}
-              className='flex flex-col gap-4'
+              className="flex flex-col gap-4"
             >
               <FormField
                 control={form.control}
-                name='email'
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Email<span className='text-destructive'>*</span>
+                      Email<span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='johndoe@gmail.com'
-                        type='email'
+                        placeholder="johndoe@gmail.com"
+                        type="email"
                         {...field}
                       />
                     </FormControl>
@@ -170,21 +166,21 @@ const SignupPage = () => {
               />
               <FormField
                 control={form.control}
-                name='accountType'
+                name="accountType"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Account type<span className='text-destructive'>*</span>
+                      Account type<span className="text-destructive">*</span>
                     </FormLabel>
                     <Select onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder='select an account type' />
+                          <SelectValue placeholder="select an account type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value='personal'>Personal</SelectItem>
-                        <SelectItem value='company'>Company</SelectItem>
+                        <SelectItem value="personal">Personal</SelectItem>
+                        <SelectItem value="company">Company</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormItem>
@@ -194,18 +190,15 @@ const SignupPage = () => {
                 <>
                   <FormField
                     control={form.control}
-                    name='companyName'
+                    name="companyName"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
                           Company name
-                          <span className='text-destructive'>*</span>
+                          <span className="text-destructive">*</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder='Company Name'
-                            {...field}
-                          />
+                          <Input placeholder="Company Name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -213,16 +206,16 @@ const SignupPage = () => {
                   />
                   <FormField
                     control={form.control}
-                    name='numberOfEmployees'
+                    name="numberOfEmployees"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          Employees<span className='text-destructive'>*</span>
+                          Employees<span className="text-destructive">*</span>
                         </FormLabel>
                         <FormControl>
                           <Input
-                            placeholder='Employees'
-                            type='number'
+                            placeholder="Employees"
+                            type="number"
                             min={0}
                             {...field}
                             value={field.value ?? ''}
@@ -236,30 +229,27 @@ const SignupPage = () => {
               )}
               <FormField
                 control={form.control}
-                name='dob'
+                name="dob"
                 render={({ field }) => (
-                  <FormItem className='flex flex-col'>
+                  <FormItem className="flex flex-col">
                     <FormLabel>
-                      Date of Birth<span className='text-destructive'>*</span>
+                      Date of Birth<span className="text-destructive">*</span>
                     </FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
                             variant={'outline'}
-                            className='normal-case flex justify-between'
+                            className="flex justify-between normal-case"
                           >
                             <span>Pick a Date</span>
                             <CalendarIcon />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent
-                        align='start'
-                        className='w-auto p-0'
-                      >
+                      <PopoverContent align="start" className="w-auto p-0">
                         <Calendar
-                          mode='single'
+                          mode="single"
                           defaultMonth={field.value}
                           selected={field.value}
                           onSelect={field.onChange}
@@ -267,7 +257,7 @@ const SignupPage = () => {
                           weekStartsOn={1}
                           fromDate={dobFromDate}
                           toDate={new Date()}
-                          captionLayout='dropdown-buttons'
+                          captionLayout="dropdown-buttons"
                         />
                       </PopoverContent>
                     </Popover>
@@ -277,17 +267,14 @@ const SignupPage = () => {
               />
               <FormField
                 control={form.control}
-                name='password'
+                name="password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Password<span className='text-destructive'>*</span>
+                      Password<span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <PasswordInput
-                        placeholder='*******'
-                        {...field}
-                      />
+                      <PasswordInput placeholder="*******" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -295,18 +282,15 @@ const SignupPage = () => {
               />
               <FormField
                 control={form.control}
-                name='passwordConfirm'
+                name="passwordConfirm"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
                       Confirm Password
-                      <span className='text-destructive'>*</span>
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <PasswordInput
-                        placeholder='*******'
-                        {...field}
-                      />
+                      <PasswordInput placeholder="*******" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -314,10 +298,10 @@ const SignupPage = () => {
               />
               <FormField
                 control={form.control}
-                name='acceptTerms'
+                name="acceptTerms"
                 render={({ field }) => (
                   <FormItem>
-                    <div className='flex gap-2 justify-start'>
+                    <div className="flex justify-start gap-2">
                       <FormControl>
                         <Checkbox
                           checked={field.value}
@@ -331,8 +315,8 @@ const SignupPage = () => {
                     <FormDescription>
                       By signing up you are agree to our{' '}
                       <Link
-                        className='text-primary hover:underline'
-                        href='/terms'
+                        className="text-primary hover:underline"
+                        href="/terms"
                       >
                         terms and conditions
                       </Link>
@@ -342,21 +326,15 @@ const SignupPage = () => {
                 )}
               />
 
-              <Button
-                type='submit'
-                className='uppercase font-bold'
-              >
+              <Button type="submit" className="font-bold uppercase">
                 Sign up
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className='justify-between'>
-          <small className='font-semibold'>Already have an account?</small>
-          <Button
-            asChild
-            variant={'outline'}
-          >
+        <CardFooter className="justify-between">
+          <small className="font-semibold">Already have an account?</small>
+          <Button asChild variant={'outline'}>
             <Link href={'/login'}>Login</Link>
           </Button>
         </CardFooter>

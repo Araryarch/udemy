@@ -48,8 +48,8 @@ const LoginPage = () => {
   }
 
   return (
-    <Layout>
-      <Card className="w-full max-w-sm">
+    <Layout classname="border-[1px] backdrop-blur-lg">
+      <Card className="w-full max-w-sm border-[1px] border-transparent bg-transparent shadow-transparent">
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>Login to your Anidash account</CardDescription>
