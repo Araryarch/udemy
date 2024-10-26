@@ -4,6 +4,8 @@ import { PersonStandingIcon } from 'lucide-react'
 import ThemeToggle from '../../components/ui/theme-toggle'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import darkBg from '@/app/bg-dark.png'
+import lightBg from '@/app/bg-light.png'
 
 type Props = {
   children: React.ReactNode
@@ -14,7 +16,9 @@ const Layout = ({ children }: Props) => {
   const isRoot = pathname === '/'
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[url(./bg-light.png)] bg-cover py-10 transition-all duration-500 ease-in-out dark:bg-[url(./bg-dark.png)]">
+    <div
+      className={`flex min-h-screen w-full flex-col items-center justify-center bg-[url(${lightBg})] bg-cover py-10 transition-all duration-500 ease-in-out dark:bg-[url(${darkBg})]`}
+    >
       <div className="py-2">
         <PersonStandingIcon size={45} />
       </div>
